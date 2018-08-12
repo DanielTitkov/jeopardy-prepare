@@ -1,19 +1,18 @@
 # json-prepare
 
-Loads data from JSON files, filters it by multiple keys and saves to file.
+Loads data from JSON files, filters it by multiple keys and saves to file. You can get demo data from here: [Reddit Jeopardy data](https://www.reddit.com/r/datasets/comments/1uyd0t/200000_jeopardy_questions_in_a_json_file/). 
 
 ### Prerequisites
 
-Works with Python 3.5.x and higher, and does not require any additional libraries.
+Works with Python 3.5.x and higher. Does not require any additional libraries.
+![Little kitty](https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Just copy repo to your computer.
 
 ```
-Give the example
+git clone https://github.com/DanielTitkov/json-prepare.git
 ```
 
 ## Using json-prepare
