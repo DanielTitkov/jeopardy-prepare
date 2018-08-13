@@ -6,7 +6,18 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 logging.basicConfig(format='%(asctime)s | %(levelname)s | %(message)s', level=logging.INFO)
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+
+
+def load_json_data(path):
+    with open(path) as f:
+        json_data = json.load(f)  
+    return json_data
+
+
+def save_json_data(path, data):
+    with open(path, 'w') as f:
+        json.dump(data, f)
 
 
 def parse_filter_params(raw_params):
@@ -44,19 +55,15 @@ def filter_json(json_data, **kwargs):
 def main():
     # parse arguments
     parser = argparse.ArgumentParser(description='Filter JSON data by some keys and save to file')
-    parser.add_argument('-i', '--input', help="Specify input file")
-    parser.add_argument('-o', '--output', help="Specify output file")
+    parser.add_argument('-i', '--input', help="Input file", default=config['DEFAULT']['INPUT'])
+    parser.add_argument('-o', '--output', help="Output file", default=config['DEFAULT']['OUTPUT'])
     parser.add_argument('-v', '--values', action="store_true", help="Print all possible values")
     args, raw_params = parser.parse_known_args()
 
-    input_path = args.input if args.input else config['DEFAULT']['INPUT']
-    output_path = args.output if args.output else config['DEFAULT']['OUTPUT']
-
     #load json data
     logger.info('Loading data...')
-    with open(input_path) as f:
-        json_data = json.load(f)  
-    logger.info('Data loaded')
+    json_data = load_json_data(args.input)
+    logger.info('Data loaded from {}'.format(args.input))
 
     # parse filter params
     params = parse_filter_params(raw_params)
@@ -69,18 +76,16 @@ def main():
     
     # filter json data
     logger.info('Filtering by {}'.format(params))
-    filtered = filter_json(json_data, **params)
+    filtered_json = filter_json(json_data, **params)
     logger.info('Data filtered')
 
     # save filtered data if any
-    if len(filtered) == 0:
+    if len(filtered_json) == 0:
         logger.warning('Found no matching objects. Please check filter parameters')
         exit()
 
-    with open(output_path, 'w') as f:
-        json.dump(filtered, f)
-
-    logger.info('{} items saved to {}'.format(len(filtered), output_path))  
+    save_json_data(args.output, filtered_json) 
+    logger.info('{} items saved to {}'.format(len(filtered_json), args.output)) 
 
 
 if __name__ == '__main__':
