@@ -33,7 +33,7 @@ optional arguments:
   -v, --values          Print all possible values
   <filter_params>       Filter keys in specific format: <key>:<value1>,<value2> <key2>:<value>
 ```
-Path to the your file with JSON data to process as well as output path can be also specified in config.ini file.
+Path to the file with JSON data to process as well as output path can be also specified in config.ini file.
 To filter JSON data by some keys, run program as shown bellow. Keys that are not present in the data will be ignored.
 ```
 python prepare.py category:HISTORY
@@ -55,4 +55,4 @@ If you use **-v** with filter options like **category:HISTORY**, values will be 
 
 ## License
 
-This project is licensed under the Unlicense - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the Unlicense - see the [LICENSE](LICENSE) file for details
